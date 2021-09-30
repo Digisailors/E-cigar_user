@@ -15,7 +15,6 @@ class Driver {
     required this.bioData,
     this.earnings = 0,
     required this.availability,
-    required this.notOnDuty,
     required this.currentLocation,
     this.currentOrderRef,
     this.rides,
@@ -24,7 +23,6 @@ class Driver {
   BioData bioData;
   double earnings;
   bool availability;
-  bool notOnDuty;
   Location currentLocation;
   String? currentOrderRef;
   dynamic rides;
@@ -33,7 +31,6 @@ class Driver {
         bioData: BioData.fromJson(json["bioData"]),
         earnings: json["earnings"].toDouble(),
         availability: json["availability"],
-        notOnDuty: json["notOnDuty"],
         currentLocation: Location.fromJson(json["currentLocation"]),
         currentOrderRef: json["currentOrderRef"],
         rides: json["rides"],
@@ -43,7 +40,6 @@ class Driver {
         "bioData": bioData.toJson(),
         "earnings": earnings,
         "availability": availability,
-        "notOnDuty": notOnDuty,
         "currentLocation": currentLocation.toJson(),
         "currentOrderRef": currentOrderRef,
         "rides": rides,
