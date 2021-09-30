@@ -3,11 +3,14 @@ import 'package:e_cigar_user/Components/bottom_bar.dart';
 import 'package:e_cigar_user/Components/textfield.dart';
 import 'package:e_cigar_user/Locale/locales.dart';
 import 'package:e_cigar_user/Routes/routes.dart';
+import 'package:e_cigar_user/Services/db.dart';
 import 'package:e_cigar_user/Themes/colors.dart';
 import 'package:e_cigar_user/controllers/controller.dart';
+import 'package:e_cigar_user/controllers/user_controller.dart';
 import 'package:e_cigar_user/models/users.dart';
 import 'package:e_cigar_user/pages/verification_page.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 // ignore: must_be_immutable
 class RegistrationPage extends StatelessWidget {
@@ -57,83 +60,54 @@ class RegisterForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Stack(
-            children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                child: SingleChildScrollView(
-                  child: Column(
-                    children: <Widget>[
-                      Divider(
-                        color: Theme.of(context).cardColor,
-                        thickness: 8.0,
-                      ),
-                      const SizedBox(
-                        height: 25,
-                      ),
-                      //name textField
-                      inputField(
-                          AppLocalizations.of(context)!.fullName!.toUpperCase(),
-                          'Samantha Smith',
-                          'images/icons/ic_name.png',
-                          _nameController),
-                      //email textField
-                      inputField(
-                          AppLocalizations.of(context)!
-                              .emailAddress!
-                              .toUpperCase(),
-                          'samanthasmith@mail.com',
-                          'images/icons/ic_mail.png',
-                          _emailController),
+      children: <Widget>[
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+          child: SingleChildScrollView(
+            child: Column(
+              children: <Widget>[
+                Divider(
+                  color: Theme.of(context).cardColor,
+                  thickness: 8.0,
+                ),
+                const SizedBox(
+                  height: 25,
+                ),
+                //name textField
+                inputField(AppLocalizations.of(context)!.fullName!.toUpperCase(), 'Samantha Smith', 'images/icons/ic_name.png', _nameController),
+                //email textField
+                inputField(AppLocalizations.of(context)!.emailAddress!.toUpperCase(), 'samanthasmith@mail.com', 'images/icons/ic_mail.png',
+                    _emailController),
 
-                      //phone textField
-                      inputField(
-                          AppLocalizations.of(context)!
-                              .mobileNumber!
-                              .toUpperCase(),
-                          phoneNumber,
-                          'images/icons/ic_phone.png',
-                          null),
+                //phone textField
+                inputField(AppLocalizations.of(context)!.mobileNumber!.toUpperCase(), phoneNumber, 'images/icons/ic_phone.png', null),
 
-                      Padding(
-                        padding: const EdgeInsets.only(left: 16.0, bottom: 80),
-                        child: Text(
-                          AppLocalizations.of(context)!.verificationText!,
-                          style: Theme.of(context)
-                              .textTheme
-                              .headline6!
-                              .copyWith(fontSize: 12.8),
-                        ),
-                      ),
-                    ],
+                Padding(
+                  padding: const EdgeInsets.only(left: 16.0, bottom: 80),
+                  child: Text(
+                    AppLocalizations.of(context)!.verificationText!,
+                    style: Theme.of(context).textTheme.headline6!.copyWith(fontSize: 12.8),
                   ),
                 ),
-              ),
-              //continue button bar
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: BottomBar(
-                    text: "Continue",
-                    onTap: () {
-                      authController.auth.firebaseAuth.verifyPhoneNumber(
-                          phoneNumber: phoneNumber,
-                          verificationCompleted: (verificationCompleted) {
-                            var customer = Customer(bioData: BioData(name: _nameController.text, phone: phoneNumber ,role: Roles., uid: ''));
-                            Navigator.of(context).push(MaterialPageRoute(builder: (context)=>Container()));
-                          },
-                          verificationFailed: (verificationFailed) {},
-                          codeSent: (String verificationId, int? resendToken) {
-                            Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) => VerificationPage(verificationId: verificationId,)));
-                          },
-                          codeAutoRetrievalTimeout: (String timeOut) {});
-                    }),
-              )
-            ],
-          );
+              ],
+            ),
+          ),
+        ),
+        //continue button bar
+        Align(
+          alignment: Alignment.bottomCenter,
+          child: BottomBar(
+              text: "Continue",
+              onTap: () async {
+                var customer = Customer(bioData: BioData(name: _nameController.text, phone: phoneNumber, uid:  authController.auth.currentUser!.uid, role: Role.CUSTOMER));
+                await addCustomer(customer);
+              }),
+        )
+      ],
+    );
   }
 
-  inputField(String title, String hint, String img,
-      TextEditingController? controller) {
+  inputField(String title, String hint, String img, TextEditingController? controller) {
     return Column(
       children: [
         Row(

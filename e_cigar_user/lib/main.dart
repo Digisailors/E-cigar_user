@@ -36,7 +36,7 @@ class MyApp extends StatelessWidget {
         Locale('en'),
       ],
       // home:  RegistrationPage(phoneNumber: '+918610729733',),
-      home:   LoginPage(),
+      home:   LandingPage(),
       // routes: PageRoutes().routes(),
     );
   }

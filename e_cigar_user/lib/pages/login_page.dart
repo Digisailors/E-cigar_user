@@ -3,7 +3,9 @@ import 'package:country_code_picker/country_code_picker.dart';
 import 'package:e_cigar_user/Components/entry_field.dart';
 import 'package:e_cigar_user/Locale/locales.dart';
 import 'package:e_cigar_user/Routes/routes.dart';
+import 'package:e_cigar_user/controllers/controller.dart';
 import 'package:e_cigar_user/pages/registration_page.dart';
+import 'package:e_cigar_user/pages/verification_page.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatelessWidget {
@@ -55,7 +57,7 @@ class MobileInput extends StatefulWidget {
 
 class _MobileInputState extends State<MobileInput> {
   final TextEditingController _controller = TextEditingController();
-  String? isoCode;
+  String? isoCode = '+91';
 
   @override
   void initState() {
@@ -77,7 +79,7 @@ class _MobileInputState extends State<MobileInput> {
         children: <Widget>[
           CountryCodePicker(
             onChanged: (value) {
-              isoCode = value.code;
+              isoCode = value.dialCode;
             },
             builder: (value) => buildButton(value),
             initialSelection: '+91',
@@ -119,7 +121,23 @@ class _MobileInputState extends State<MobileInput> {
               ),
             ),
             onPressed: () {
-              Navigator.of(context).push(MaterialPageRoute(builder: (context)=>RegistrationPage(phoneNumber: _controller.text)));
+              authController.auth.firebaseAuth.verifyPhoneNumber(
+                          phoneNumber: isoCode!+_controller.text,
+                          verificationCompleted: (credential) async {
+                            await authController.auth.firebaseAuth.signInWithCredential(credential);
+                            Navigator.of(context).push(MaterialPageRoute(builder: (context)=>Container()));
+                          },
+                          verificationFailed: (verificationFailed) {
+
+                          },
+                          codeSent: (String verificationId, int? resendToken) {
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => VerificationPage(verificationId: verificationId,)));
+                            
+                          },
+                          codeAutoRetrievalTimeout: (String timeOut) {
+
+                          });
             },
           ),
         ],

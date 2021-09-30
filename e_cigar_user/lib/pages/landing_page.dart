@@ -31,13 +31,19 @@ class LandingPage extends StatelessWidget {
                 builder: (BuildContext context, AsyncSnapshot snapshot) {
                   if (snapshot.connectionState == ConnectionState.active &&
                       snapshot.hasData) {
+
+
+
                       if(snapshot.data.data()!=null){
                         var customer = Customer.fromJson(snapshot.data.data());
                         Get.put(UserController(customer));
-                        return  Container();
+                        return  Container(); 
                       } else {
                         return  RegistrationPage(phoneNumber : auth.currentUser!.phoneNumber!);
                       }
+
+
+                      
                     }
                   else {
                     return const Scaffold();
@@ -51,3 +57,4 @@ class LandingPage extends StatelessWidget {
         });
   }
 }
+

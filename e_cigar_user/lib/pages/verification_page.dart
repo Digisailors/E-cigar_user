@@ -37,7 +37,7 @@ class VerificationPage extends StatelessWidget {
         ),
       ),
       body: FadedSlideAnimation(
-        //========================================OTP===========vErify==============================================
+        //========================================OTP-VERIFY==============================================
         Stack(
           children: [
             SingleChildScrollView(
@@ -96,8 +96,9 @@ class VerificationPage extends StatelessWidget {
               child: BottomBar(
                   text: AppLocalizations.of(context)!.continueText,
                   onTap: () async {
-                    PhoneAuthCredential credential = PhoneAuthProvider.credential(verificationId: verificationId, smsCode: _otpController.text);
+                    var credential = PhoneAuthProvider.credential(verificationId: verificationId, smsCode: _otpController.text);
                     await authController.auth.firebaseAuth.signInWithCredential(credential);
+                    
                   }),
             ),
           ],

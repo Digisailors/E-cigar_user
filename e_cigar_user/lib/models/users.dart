@@ -6,7 +6,6 @@ import 'dart:convert';
 
 import 'package:e_cigar_user/models/shop.dart';
 
-
 Owner bioDataFromJson(String str) => Owner.fromJson(json.decode(str));
 
 String bioDataToJson(Owner data) => json.encode(data.toJson());
@@ -68,23 +67,17 @@ class Customer {
 
   factory Customer.fromJson(Map<String, dynamic> json) => Customer(
         bioData: BioData.fromJson(json["bioData"]),
-        myOrdersRefs: List<String>.from(json["myOrdersRefs"].map((x) => x)),
-        myCartRefs: List<String>.from(json["myCartRefs"].map((x) => x)),
-        favourites: List<String>.from(json["favourites"].map((x) => x)),
+        myOrdersRefs: json["myOrdersRefs"] != null ? List<String>.from(json["myOrdersRefs"].map((x) => x)) : null,
+        myCartRefs: json["myOrdersRefs"] != null ? List<String>.from(json["myCartRefs"].map((x) => x)) : null,
+        favourites: json["myOrdersRefs"] != null ? List<String>.from(json["favourites"].map((x) => x)) : null,
         earnings: json["earnings"],
       );
 
   Map<String, dynamic> toJson() => {
         "bioData": bioData.toJson(),
-        "myOrdersRefs": myOrdersRefs != null
-            ? List<dynamic>.from(myOrdersRefs!.map((x) => x))
-            : null,
-        "myCartRefs": myCartRefs != null
-            ? List<dynamic>.from(myCartRefs!.map((x) => x))
-            : null,
-        "favourites": favourites != null
-            ? List<dynamic>.from(favourites!.map((x) => x))
-            : null,
+        "myOrdersRefs": myOrdersRefs != null ? List<dynamic>.from(myOrdersRefs!.map((x) => x)) : null,
+        "myCartRefs": myCartRefs != null ? List<dynamic>.from(myCartRefs!.map((x) => x)) : null,
+        "favourites": favourites != null ? List<dynamic>.from(favourites!.map((x) => x)) : null,
         "earnings": earnings,
       };
 }
@@ -128,22 +121,11 @@ class BioData {
   String uid;
   Role role;
 
-  factory BioData.fromJson(Map<String, dynamic> json) => BioData(
-        name: json["name"],
-        phone: json["phone"],
-        address: json["address"],
-        uid: json["uid"], 
-        role: Role.values[json["role"]]
-      );
+  factory BioData.fromJson(Map<String, dynamic> json) =>
+      BioData(name: json["name"], phone: json["phone"], address: json["address"], uid: json["uid"], role: Role.values[json["role"]]);
 
-  Map<String, dynamic> toJson() => {
-        "name": name,
-        "phone": phone,
-        "address": address,
-        "uid": uid,
-        "role" : role.index
-      };
+  Map<String, dynamic> toJson() => {"name": name, "phone": phone, "address": address, "uid": uid, "role": role.index};
 }
 
 // ignore: constant_identifier_names
-enum Role {ADMIN, DRIVER, OWNER, CUSTOMER}
+enum Role { ADMIN, DRIVER, OWNER, CUSTOMER }

@@ -38,7 +38,7 @@ Future<void> addDriver(Driver driver) async {
 }
 
 Future<void> addCustomer(Customer customer) async {
-   users.add(customer.toJson()).then((value) => print("User added")).catchError((error)=>print("Failed"));
+   users.doc(customer.bioData.uid).set(customer.toJson()).then((value) => print("User added")).catchError((error)=>print("Failed"));
 }
 
 Future<void> register(Owner owner, Shop shop) async {
