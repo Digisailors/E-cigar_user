@@ -198,7 +198,7 @@ class SmallImageTextFormField extends StatelessWidget {
                   .bodyText2!
                   .copyWith(color: Colors.black, fontSize: 14)),
         ),
-        SizedBox(
+        const SizedBox(
           height: 15,
         )
       ],

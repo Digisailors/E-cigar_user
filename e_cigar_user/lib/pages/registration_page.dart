@@ -2,13 +2,11 @@ import 'package:animation_wrappers/Animations/faded_slide_animation.dart';
 import 'package:e_cigar_user/Components/bottom_bar.dart';
 import 'package:e_cigar_user/Components/textfield.dart';
 import 'package:e_cigar_user/Locale/locales.dart';
-import 'package:e_cigar_user/Routes/routes.dart';
 import 'package:e_cigar_user/Services/db.dart';
 import 'package:e_cigar_user/Themes/colors.dart';
 import 'package:e_cigar_user/controllers/controller.dart';
 import 'package:e_cigar_user/controllers/user_controller.dart';
 import 'package:e_cigar_user/models/users.dart';
-import 'package:e_cigar_user/pages/verification_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -42,8 +40,8 @@ class RegistrationPage extends StatelessWidget {
         RegisterForm(
           phoneNumber: phoneNumber,
         ),
-        beginOffset: Offset(0.0, 0.3),
-        endOffset: Offset(0, 0),
+        beginOffset: const Offset(0.0, 0.3),
+        endOffset: const Offset(0, 0),
         slideCurve: Curves.linearToEaseOut,
       ),
     );
@@ -51,7 +49,6 @@ class RegistrationPage extends StatelessWidget {
 }
 
 class RegisterForm extends StatelessWidget {
-  @override
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final String phoneNumber;
@@ -100,7 +97,7 @@ class RegisterForm extends StatelessWidget {
               text: "Continue",
               onTap: () async {
                 var customer = Customer(bioData: BioData(name: _nameController.text, phone: phoneNumber, uid:  authController.auth.currentUser!.uid, role: Role.CUSTOMER));
-                await addCustomer(customer);
+                await addCustomer(customer).then((value) => Get.put(UserController(customer)));
               }),
         )
       ],

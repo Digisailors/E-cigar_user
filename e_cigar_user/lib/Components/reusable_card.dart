@@ -5,7 +5,7 @@ class ReusableCard extends StatefulWidget {
   final Widget? cardChild;
   final Function? onPress;
 
-  ReusableCard({this.cardChild, this.onPress});
+  const ReusableCard({Key? key, this.cardChild, this.onPress}) : super(key: key);
 
   @override
   _ReusableCardState createState() => _ReusableCardState();
@@ -21,7 +21,7 @@ class _ReusableCardState extends State<ReusableCard>
     super.initState();
     _controller = AnimationController(
       vsync: this,
-      duration: Duration(milliseconds: 500),
+      duration: const Duration(milliseconds: 500),
     );
     _animation = Tween(
       begin: 0.0,
@@ -44,7 +44,7 @@ class _ReusableCardState extends State<ReusableCard>
         opacity: _animation as Animation<double>,
         child: Container(
           child: widget.cardChild,
-          padding: EdgeInsets.all(18.3),
+          padding: const EdgeInsets.all(18.3),
           decoration: BoxDecoration(
             color: Theme.of(context).cardColor,
           ),

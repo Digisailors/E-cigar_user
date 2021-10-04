@@ -62,6 +62,10 @@ addProduct(Product product) async {
   return users.doc(uid).snapshots();
 }
 
+ getProfileAsFuture(String uid) async  {
+  return await users.doc(uid).get();
+}
+
  Stream<QuerySnapshot<Map<String, dynamic>>> getProducts(int category){
    switch(category){
      case 1 : return items.where('categoryList', arrayContains: 'VAPE').snapshots();

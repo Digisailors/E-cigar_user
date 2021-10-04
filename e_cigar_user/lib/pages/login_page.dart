@@ -2,9 +2,7 @@ import 'package:animation_wrappers/Animations/faded_slide_animation.dart';
 import 'package:country_code_picker/country_code_picker.dart';
 import 'package:e_cigar_user/Components/entry_field.dart';
 import 'package:e_cigar_user/Locale/locales.dart';
-import 'package:e_cigar_user/Routes/routes.dart';
 import 'package:e_cigar_user/controllers/controller.dart';
-import 'package:e_cigar_user/pages/registration_page.dart';
 import 'package:e_cigar_user/pages/verification_page.dart';
 import 'package:flutter/material.dart';
 
@@ -37,7 +35,7 @@ class LoginPage extends StatelessWidget {
                   flex: 3,
                   child: Image.asset("images/signin hero.png"),
                 ),
-                MobileInput(),
+                const MobileInput(),
               ],
             ),
           ),
@@ -51,6 +49,8 @@ class LoginPage extends StatelessWidget {
 }
 
 class MobileInput extends StatefulWidget {
+  const MobileInput({Key? key}) : super(key: key);
+
   @override
   _MobileInputState createState() => _MobileInputState();
 }
