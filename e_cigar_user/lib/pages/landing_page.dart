@@ -1,3 +1,4 @@
+import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_cigar_user/Services/db.dart';
@@ -34,14 +35,11 @@ class LandingPage extends StatelessWidget {
 
 
                       if(snapshot.data.data()!=null){
-
                         var customer = Customer.fromJson(snapshot.data.data());
                         Get.put(UserController(customer));
-                        
                         return  Container(); 
                       } else {
                         return  RegistrationPage(phoneNumber : auth.currentUser!.phoneNumber!);
-                        // return ItemsPage('Food Master');
                       }
 
 

@@ -3,6 +3,7 @@
 //     final bioData = bioDataFromJson(jsonString);
 
 import 'dart:convert';
+
 import 'package:e_cigar_user/models/shop.dart';
 
 Owner bioDataFromJson(String str) => Owner.fromJson(json.decode(str));
@@ -49,30 +50,30 @@ class Customer {
   Customer({
     required this.bioData,
     this.myOrdersRefs,
-    this.myCart,
+    this.myCartRefs,
     this.favourites,
     this.earnings = 0.0,
   });
 
   BioData bioData;
   List<String>? myOrdersRefs;
-  List<ProductRef>? myCart;
+  List<String>? myCartRefs;
   List<String>? favourites;
   double earnings;
 
   factory Customer.fromJson(Map<String, dynamic> json) => Customer(
         bioData: BioData.fromJson(json["bioData"]),
-        myOrdersRefs: json["myOrdersRefs"] != null ? List<String>.from(json["myOrdersRefs"].map((x) => x)) : [],
-        myCart: json["myCart"] != null ? List<ProductRef>.from(json["myCart"].map((x) => x)) : [],
-        favourites: json["myOrdersRefs"] != null ? List<String>.from(json["favourites"].map((x) => x)) : [],
+        myOrdersRefs: json["myOrdersRefs"] != null ? List<String>.from(json["myOrdersRefs"].map((x) => x)) : null,
+        myCartRefs: json["myOrdersRefs"] != null ? List<String>.from(json["myCartRefs"].map((x) => x)) : null,
+        favourites: json["myOrdersRefs"] != null ? List<String>.from(json["favourites"].map((x) => x)) : null,
         earnings: json["earnings"],
       );
 
   Map<String, dynamic> toJson() => {
         "bioData": bioData.toJson(),
-        "myOrdersRefs": myOrdersRefs != null ? List<dynamic>.from(myOrdersRefs!.map((x) => x)) : [],
-        "myCart": myCart != null ? List<dynamic>.from(myCart!.map((x) => x)) : [],
-        "favourites": favourites != null ? List<dynamic>.from(favourites!.map((x) => x)) : [],
+        "myOrdersRefs": myOrdersRefs != null ? List<dynamic>.from(myOrdersRefs!.map((x) => x)) : null,
+        "myCartRefs": myCartRefs != null ? List<dynamic>.from(myCartRefs!.map((x) => x)) : null,
+        "favourites": favourites != null ? List<dynamic>.from(favourites!.map((x) => x)) : null,
         "earnings": earnings,
       };
 }
@@ -124,32 +125,3 @@ class BioData {
 
 // ignore: constant_identifier_names
 enum Role { ADMIN, DRIVER, OWNER, CUSTOMER }
-
-
-class ProductRef {
-    ProductRef({
-        required this.productName,
-        required this.quantity,
-        required this.productRef,
-        required this.productPrice,
-    });
-
-    String productName;
-    int quantity;
-    String productRef;
-    double productPrice;
-
-    factory ProductRef.fromJson(Map<String, dynamic> json) => ProductRef(
-        productName: json["productName"],
-        quantity: int.parse(json["quantity"]),
-        productRef: json["productRef"],
-        productPrice: json["productPrice"].toDouble(),
-    );
-
-    Map<String, dynamic> toJson() => {
-        "productName": productName,
-        "quantity": quantity,
-        "productRef": productRef,
-        "productPrice": productPrice,
-    };
-}

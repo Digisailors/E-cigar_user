@@ -19,9 +19,7 @@ class Shop {
     required this.availability,
     this.isPermitted = false,
     this.orderRefs,
-    this.reviews,
-    email,
-    phoneNumber,
+    this.reviews, email, phoneNumber,
   });
 
   String name;
@@ -39,43 +37,37 @@ class Shop {
 
   factory Shop.fromJson(Map<String, dynamic> json) => Shop(
         name: json["name"],
-        email: json["email"],
-        phoneNumber: json["phoneNumber"],
+        email : json["email"],
+        phoneNumber : json["phoneNumber"],
         ownerRef: json["ownerRef"],
         address: json["address"],
         location: Location.fromJson(json["location"]),
-        openingTime: Time.fromJson(json["time"]),
+        openingTime:  Time.fromJson(json["time"]),
         closingTime: Time.fromJson(json["time"]),
         availability: json["availability"],
         orderRefs: List<String>.from(json["orders"].map((x) => x)),
-        reviews: List<Review>.from(json["reviews"].map((x) => Review.fromJson(x))),
+        reviews:
+            List<Review>.from(json["reviews"].map((x) => Review.fromJson(x))), 
         isPermitted: json["isPermitted"],
       );
 
   Map<String, dynamic> toJson() => {
-        "name": name,
-        "email": email,
-        "phoneNumber": phoneNumber,
-        "ownerRef": ownerRef,
+        "name"  : name,
+        "email" : email,
+        "phoneNumber" : phoneNumber,
+        "ownerRef"  : ownerRef,
         "address": address,
         "location": location.toJson(),
-        "openingTime": openingTime.toJson(),
+        "openingTime":  openingTime.toJson(),
         "closingTime": closingTime.toJson(),
         "availability": availability,
-        "orders": orderRefs != null ? List<dynamic>.from(orderRefs!.map((x) => x)) : null,
-        "reviews": reviews != null ? List<dynamic>.from(reviews!.map((x) => x.toJson())) : null,
+        "orders": orderRefs != null
+            ? List<dynamic>.from(orderRefs!.map((x) => x))
+            : null,
+        "reviews": reviews != null
+            ? List<dynamic>.from(reviews!.map((x) => x.toJson()))
+            : null,
       };
-
-  static Shop getShop() {
-    return Shop(
-        address: 'kailaasa',
-        availability: true,
-        closingTime: Time(hours: 12, minutes: 00),
-        location: Location(latitude: 72.9811808, longitude: 8.08404),
-        name: 'Pugai Vaanam',
-        openingTime: Time(hours: 12, minutes: 00),
-        ownerRef: 'oori BABA');
-  }
 }
 
 class Location {
@@ -122,23 +114,27 @@ class Review {
       };
 }
 
+
 Time timeFromJson(String str) => Time.fromJson(json.decode(str));
 
 String timeToJson(Time data) => json.encode(data.toJson());
 
 class Time {
-  Time({this.hours = 0, this.minutes = 0});
+    Time({
+        this.hours = 0,
+        this.minutes = 0
+    });
 
-  int hours;
-  int minutes;
+    int hours;
+    int minutes;
 
-  factory Time.fromJson(Map<String, dynamic> json) => Time(
+    factory Time.fromJson(Map<String, dynamic> json) => Time(
         hours: json["hours"],
         minutes: json["minutes"],
-      );
+    );
 
-  Map<String, dynamic> toJson() => {
+    Map<String, dynamic> toJson() => {
         "hours": hours,
         "minutes": minutes,
-      };
+    };
 }
