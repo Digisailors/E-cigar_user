@@ -31,7 +31,7 @@ class CustomAppBar extends StatelessWidget {
       actions: actions,
       bottom: bottom ??
           PreferredSize(
-            preferredSize: const Size.fromHeight(0.0),
+            preferredSize: Size.fromHeight(0.0),
             child: CustomSearchBar(
               boxShadow: boxShadow,
               color: color,

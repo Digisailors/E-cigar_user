@@ -45,14 +45,10 @@ Widget build(BuildContext context) {
         image: bottomIconAccount,
       ),
     ];
-     List<Widget> _children =  [
-
-      const HomePage(),
-      // OrderPage(),
-      // AccountPage(),
-      // Container(),
-      Container(),
-      Container(),
+    const List<Widget> _children =[
+      HomePage(),
+      OrderPage(),
+      AccountPage(),
     ];
     return Scaffold(
       body: _children[_currentIndex],

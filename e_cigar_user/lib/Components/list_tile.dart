@@ -7,12 +7,12 @@ class BuildListTile extends StatelessWidget {
   final Function? onTap;
   final bool small;
 
-  const BuildListTile({Key? key, this.image, this.text, this.onTap, this.small = false}) : super(key: key);
+  BuildListTile({this.image, this.text, this.onTap, this.small = false});
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      contentPadding: const EdgeInsets.symmetric(vertical: 2.0, horizontal: 20.0),
+      contentPadding: EdgeInsets.symmetric(vertical: 2.0, horizontal: 20.0),
       leading: FadedScaleAnimation(
         Image.asset(
           image!,

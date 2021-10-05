@@ -1,5 +1,8 @@
 import 'package:e_cigar_user/Themes/style.dart';
 import 'package:e_cigar_user/pages/landing_page.dart';
+import 'package:e_cigar_user/pages/login_page.dart';
+import 'package:e_cigar_user/pages/registration_page.dart';
+import 'package:e_cigar_user/pages/verification_page.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -7,7 +10,6 @@ import 'package:get/get.dart';
 
 import 'Locale/locales.dart';
 import 'controllers/auth_controller.dart';
-import 'pages/App/_home_order_account.dart';
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();

@@ -4,7 +4,6 @@ import 'package:e_cigar_user/Services/db.dart';
 import 'package:e_cigar_user/controllers/controller.dart';
 import 'package:e_cigar_user/controllers/user_controller.dart';
 import 'package:e_cigar_user/models/users.dart';
-import 'package:e_cigar_user/pages/App/_home_order_account.dart';
 import 'package:e_cigar_user/pages/login_page.dart';
 import 'package:e_cigar_user/pages/registration_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -26,21 +25,31 @@ class LandingPage extends StatelessWidget {
             if (user == null) {
               return const LoginPage();
             } else {
-              return FutureBuilder(
-                future: getProfileAsFuture(auth.currentUser!.uid),
+              return StreamBuilder<DocumentSnapshot<Map<String, dynamic>>>(
+                stream: getProfile(auth.currentUser!.uid),
                 builder: (BuildContext context, AsyncSnapshot snapshot) {
-                  if(snapshot.hasError){
-                    return const Text("Something Went Wrrong");
-                  } 
-                  if(snapshot.hasData && !snapshot.data.exists) {
-                    return RegistrationPage(phoneNumber: auth.currentUser!.phoneNumber!);
-                  } 
-                  if(snapshot.connectionState == ConnectionState.done){
-                    Map<String, dynamic> data = snapshot.data!.data() as Map<String, dynamic>;
-                    Get.put(UserController(Customer.fromJson(data)));
-                    return HomeOrderAccount();
+                  if (snapshot.connectionState == ConnectionState.active &&
+                      snapshot.hasData) {
+
+
+
+                      if(snapshot.data.data()!=null){
+
+                        var customer = Customer.fromJson(snapshot.data.data());
+                        Get.put(UserController(customer));
+                        
+                        return  Container(); 
+                      } else {
+                        return  RegistrationPage(phoneNumber : auth.currentUser!.phoneNumber!);
+                        // return ItemsPage('Food Master');
+                      }
+
+
+                      
+                    }
+                  else {
+                    return const Scaffold();
                   }
-                  return const Scaffold(body: Center(child: CircularProgressIndicator()),);
                 },
               );
             }
